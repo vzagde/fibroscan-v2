@@ -44,7 +44,7 @@ var active_counter = 0;
 var interval = setInterval(function() {
     active_counter++;
     console.log(active_counter);
-    if (active_counter == 60) {
+    if (active_counter == 300) {
         Lockr.flush();
         token = false;
         mainView.router.load({
@@ -56,6 +56,8 @@ var interval = setInterval(function() {
         active_counter = 0;
     }
 }, 1000);
+
+
 
 if(token != undefined){
     // console.log('Group Name'+token.group_name);
@@ -101,9 +103,25 @@ if(token != undefined){
 
 myApp.allowPanelOpen = false;
 
+
+
+
+myApp.onPageInit('*', function (page) {
+
+  console.log(page.name + ' initialized'); 
+
+});
+ 
+
+
+
+
 myApp.onPageInit('index', function(page) {
+
+    console.log('index called');
+
+    $("#index-display").css('display','block');
     myApp.allowPanelOpen = false;
-    $("#index-display").fadeIn();
     // if(token != undefined){
     //     // console.log('Group Name'+token.group_name);
     //     $("#menu_name").text(token.first_name);

@@ -104,7 +104,6 @@ function login(){
 function logout() {
     Lockr.flush();
     token = false;
-    $("#index-display").fadeIn();
     mainView.router.load({
         url: 'index.html',
         ignoreCache: false,
@@ -629,6 +628,8 @@ function load_disease_data(){
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
+    Lockr.flush();
+    console.log('device is ready');
     document.addEventListener("backbutton", function(e) {
         e.preventDefault();
         var page = myApp.getCurrentView().activePage;
@@ -649,6 +650,8 @@ function onDeviceReady() {
             mainView.router.back({});
         }
     }, false);
+
+    // mainView.router.load('index.html');
 }
 
 function nativePluginResultHandler(result) {
