@@ -15,7 +15,7 @@ var vz_yearevent = '';
 var active_count = 0;
 
 var myApp = new Framework7({
-    pushState: true,
+    pushState: false,
     // swipePanel: 'right',
     swipeBackPage:false,
     preloadPreviousPage: false,
@@ -43,8 +43,8 @@ var token = Lockr.get('token');
 var active_counter = 0;
 var interval = setInterval(function() {
     active_counter++;
-    console.log(active_counter);
-    if (active_counter == 300) {
+    // console.log(active_counter);
+    if (active_counter == 30000) {
         Lockr.flush();
         token = false;
         mainView.router.load({
@@ -1038,10 +1038,12 @@ myApp.onPageInit('entries', function(page) {
     var data = page.query.records;
     var count = page.query.number_count;
     var start_camp_id = page.query.camp_id;
+    // console.log(CryptoJS.AES.encrypt(JSON.stringify(page.query.records), 'l0c@Lh0st'));
     $("#number_of_entry").text('No.of Entries : '+count);
     var html = '';
     for (var i = 0; i < data.length; i++) {
         var list = i+1;
+        // console(CryptoJS.AES.decrypt(toString(data[i][0]), 'l0c@lh0st').toString(CryptoJS.enc.Utf8));
         html +=
             '<div class="row">'+
                 '<a href="" onclick="edit_add_record('+i+')" ><img class="pencil" src="img/pencil_new.png" alt=""></a>'+
@@ -1098,52 +1100,113 @@ myApp.onPageInit('entries', function(page) {
     // });
 
     $( "#complete_camp" ).click(function() {
+        var encrypt_data = [];
+        var image_enc = [];
         console.log(tConvert($("#end_camp_time").val()));
         console.log(time_start);
         console.log(data);
         console.log(count);
         console.log("image"+image);
-        if($("#end_camp_time").val() == ""){
-           $("#time_error_tech").html("Please Select Time");
+        if($("#end_camp_time").val() == "") {
+            $("#time_error_tech").html("Please Select Time");
             return false; 
         // }else if (image.length == 0) {
         //     $("#time_error_tech").html("Please Upload image");
         //     return false;
         }
-        myApp.showIndicator();
-        $.ajax({
-            url: base_url + '/patients_record_submit',
-            type: 'POST',
-            crossDomain: true,
-            data: {
-                patients_records : records,
-                start_time : time_start,
-                camp_id : start_camp_id,
-                end_time : $("#end_camp_time").val(),
-                image : image,
-            },
-        })
-        .done(function(res) {
-            console.log('done: ' + j2s(res));
-            if (res.status == 'SUCCESS') {
-                myApp.alert(res.message);
-                image.length = 0;
-                technician_start_time_camp = '';
-                records.length = 0;
-                start_camp_id = '';
-                patient_record_count = '';
-                goto_page('technician_view.html');
-            }
 
-        })
-        .fail(function(err) {
-            myApp.hideIndicator();
-            myApp.alert('Some error occurred on connecting.');
-            console.log('fail: ' + j2s(err));
-        })
-        .always(function() {
-            myApp.hideIndicator();
-        });
+        for (var i = 0; i < records.length; i++) {
+            encrypt_data.push(CryptoJS.AES.encrypt(JSON.stringify(records[i]), 'l0c@lh0st', {format: CryptoJSAesJson}).toString());
+        }
+
+         for (var i = 0; i < image.length; i++) {
+            image_enc.push(CryptoJS.AES.encrypt(JSON.stringify(image[i]), 'l0c@lh0st', {format: CryptoJSAesJson}).toString());
+        }
+
+        var time_start_enc = CryptoJS.AES.encrypt(JSON.stringify(time_start), 'l0c@lh0st', {format: CryptoJSAesJson}).toString();
+        var start_camp_id_enc = CryptoJS.AES.encrypt(JSON.stringify(start_camp_id), 'l0c@lh0st', {format: CryptoJSAesJson}).toString();
+        var end_camp_time_enc = CryptoJS.AES.encrypt(JSON.stringify($("#end_camp_time").val()), 'l0c@lh0st', {format: CryptoJSAesJson}).toString();
+        // bookmark
+        console.log(image);
+        
+        myApp.showIndicator();
+        try {
+            $.ajax({
+                url: base_url + '/patients_record_submit',
+                type: 'POST',
+                dataType: 'JSON',
+                crossDomain: true,
+                data: {
+                    patients_records : encrypt_data,
+                    start_time : time_start_enc,
+                    camp_id : start_camp_id_enc,
+                    end_time : end_camp_time_enc,
+                    image : image_enc,
+                },
+            })
+            .done(function(res) {
+                console.log('done: ' + j2s(res));
+                if (res.status == 'SUCCESS') {
+                    myApp.alert(res.message);
+                    image.length = 0;
+                    encrypt_data.length = 0;
+                    image_enc.length = 0;
+                    technician_start_time_camp = '';
+                    records.length = 0;
+                    start_camp_id = '';
+                    patient_record_count = '';
+                    start_camp_id_enc = '';
+                    end_camp_time_enc = '';
+                    time_start_enc = '';
+                    goto_page('technician_view.html');
+                }
+
+            })
+            .fail(function(err) {
+                myApp.hideIndicator();
+                myApp.alert('Some error occurred on connecting.');
+                console.log('fail: ' + j2s(err));
+            })
+            .always(function() {
+                myApp.hideIndicator();
+            });
+        } catch(err) {
+            console.log('err:', err.message);
+        }
+        // $.ajax({
+        //     url: base_url + '/patients_record_submit',
+        //     type: 'POST',
+        //     dataType: 'JSON',
+        //     crossDomain: true,
+        //     data: {
+        //         patients_records : encrypt_data,
+        //         start_time : time_start,
+        //         camp_id : start_camp_id,
+        //         end_time : $("#end_camp_time").val(),
+        //         image : image,
+        //     },
+        // })
+        // .done(function(res) {
+        //     console.log('done: ' + j2s(res));
+        //     if (res.status == 'SUCCESS') {
+        //         myApp.alert(res.message);
+        //         image.length = 0;
+        //         technician_start_time_camp = '';
+        //         records.length = 0;
+        //         start_camp_id = '';
+        //         patient_record_count = '';
+        //         goto_page('technician_view.html');
+        //     }
+
+        // })
+        // .fail(function(err) {
+        //     myApp.hideIndicator();
+        //     myApp.alert('Some error occurred on connecting.');
+        //     console.log('fail: ' + j2s(err));
+        // })
+        // .always(function() {
+        //     myApp.hideIndicator();
+        // });
     });
 });
 

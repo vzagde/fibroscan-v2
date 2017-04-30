@@ -511,7 +511,9 @@ function add_record(){
          return false;
     }
     console.log($('input[name="gender"]:checked').val());
+    // var ciphertext = CryptoJS.AES.encrypt(element, 'l0c@lh0st');
     var temp = [$('input[name="gender"]:checked').val(), $('.selected').data('value'), $('#indication').val(), $('#kpa').val()];
+    // console.log(temp);
     records.push(temp);
     $('#indication').val(0);
     // $('.selected').attr('value',"");
@@ -521,7 +523,7 @@ function add_record(){
     patient_record_count += 1;
     i++;
     temp =[];
-    // console.log(records);
+    console.log(records);
     // console.log("temp"+temp);
 }
 
@@ -628,7 +630,7 @@ function load_disease_data(){
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
-    Lockr.flush();
+    // Lockr.flush();
     console.log('device is ready');
     document.addEventListener("backbutton", function(e) {
         e.preventDefault();
