@@ -44,7 +44,7 @@ var active_counter = 0;
 var interval = setInterval(function() {
     active_counter++;
     // console.log(active_counter);
-    if (active_counter == 30000) {
+    if (active_counter == 1800) {
         Lockr.flush();
         token = false;
         mainView.router.load({
