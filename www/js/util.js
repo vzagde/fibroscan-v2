@@ -90,7 +90,7 @@ function login(){
                  });
             }
         } else {
-            myApp.alert('Email or Password Mismatch');
+            myApp.alert(res.message);
         }
     })
     .fail(function(err) {
