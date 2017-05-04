@@ -1390,6 +1390,9 @@ myApp.onPageInit('camp_details', function(page) {
     console.log("camp_details_data"+camp_details_data);
 });
 
+myApp.onPageInit('privacy_policy', function(page) {
+    myApp.allowPanelOpen = true;
+});
 function load_machine_listing_details(dayEvent, monthEvent, yearEvent, token){
     $.ajax({
         url: base_url + '/machine_listing',
