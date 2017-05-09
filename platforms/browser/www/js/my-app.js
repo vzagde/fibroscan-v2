@@ -60,42 +60,44 @@ var interval = setInterval(function() {
 
 
 if(token != undefined){
+    $("#index-display").css('display','block')
+    // return false;
     // console.log('Group Name'+token.group_name);
-    $("#menu_name").text(token.first_name);
-    if (token.group_name == "Technician") {
-        $(".menu_camps_display").hide();
-        $(".camp_book_form").hide();
-        $(".camp_approved").hide();
-        $(".leader_board_screen").hide();
-        $(".dashboard").hide();
-        $("#index-display").show();
-        $("#preloader").fadeOut();
-        mainView.router.load({
-            url: 'technician_view.html',
-            ignoreCache: false,
-        });
-    } else {
-        if (token.group_name == "FAM") {
-            $(".leader_board_screen").show();
-            $(".camp_approved").show();
-            $(".dashboard").show();
-        } else {
-            $(".leader_board_screen").hide();
-            $(".camp_approved").hide();
-            $(".dashboard").hide();
-        }
-        $(".menu_camps_display").show();
-        $(".camp_book_form").show();
-        $("#index-display").show();
-        $("#preloader").fadeOut();
-        mainView.router.load({
-            url: 'calendar.html',
-            ignoreCache: false,
-        });
-    }
-    $.each(token, function(index, val) {
-        // console.log(index+" : "+val);
-    });
+    // $("#menu_name").text(token.first_name);
+    // if (token.group_name == "Technician") {
+    //     $(".menu_camps_display").hide();
+    //     $(".camp_book_form").hide();
+    //     $(".camp_approved").hide();
+    //     $(".leader_board_screen").hide();
+    //     $(".dashboard").hide();
+    //     $("#index-display").show();
+    //     $("#preloader").fadeOut();
+    //     mainView.router.load({
+    //         url: 'technician_view.html',
+    //         ignoreCache: false,
+    //     });
+    // } else {
+    //     if (token.group_name == "FAM") {
+    //         $(".leader_board_screen").show();
+    //         $(".camp_approved").show();
+    //         $(".dashboard").show();
+    //     } else {
+    //         $(".leader_board_screen").hide();
+    //         $(".camp_approved").hide();
+    //         $(".dashboard").hide();
+    //     }
+    //     $(".menu_camps_display").show();
+    //     $(".camp_book_form").show();
+    //     $("#index-display").show();
+    //     $("#preloader").fadeOut();
+    //     mainView.router.load({
+    //         url: 'calendar.html',
+    //         ignoreCache: false,
+    //     });
+    // }
+    // $.each(token, function(index, val) {
+    //     // console.log(index+" : "+val);
+    // });
 } else {
     $("#index-display").show();
     $("#preloader").fadeOut();
