@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.abbott.activationgi" version="1.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>Activation GI</name>
+<widget id="com.kreaserv.abbotttest" version="1.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>Kreaserv Test App</name>
     <description>
-        Activation GI
+        Kreaserv Dummy App
     </description>
     <author email="info@kreaserv.com" href="http://kreaserv.com">
-       Abbott India Private Limited
+       Kreaserv Media Private Limited
     </author>
     <content src="index.html" />
 
