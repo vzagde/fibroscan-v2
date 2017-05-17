@@ -630,7 +630,7 @@ function load_disease_data(){
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
-    Lockr.flush();
+    // Lockr.flush();
     console.log('device is ready');
     document.addEventListener("backbutton", function(e) {
         e.preventDefault();

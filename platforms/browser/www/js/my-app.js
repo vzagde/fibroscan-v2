@@ -122,45 +122,46 @@ myApp.onPageInit('index', function(page) {
 
     console.log('index called');
 
-    $("#index-display").css('display','block');
-    myApp.allowPanelOpen = false;
-    // if(token != undefined){
-    //     // console.log('Group Name'+token.group_name);
-    //     $("#menu_name").text(token.first_name);
-    //     if (token.group_name == "Technician") {
-    //         $(".menu_camps_display").hide();
-    //         $(".camp_book_form").hide();
-    //         $(".camp_approved").hide();
-    //         $(".leader_board_screen").hide();
-    //         $("#index-display").show();
-    //         $("#preloader").fadeOut();
-    //         mainView.router.load({
-    //             url: 'technician_view.html',
-    //             ignoreCache: false,
-    //         });
-    //     } else {
-    //         if (token.group_name == "FAM") {
-    //             $(".leader_board_screen").show();
-    //         } else {
-    //             $(".leader_board_screen").hide();
-    //         }
-    //         $(".menu_camps_display").show();
-    //         $(".camp_book_form").show();
-    //         $(".camp_approved").show();
-    //         $("#index-display").show();
-    //         $("#preloader").fadeOut();
-    //         mainView.router.load({
-    //             url: 'calendar.html',
-    //             ignoreCache: false,
-    //         });
-    //     }
-    //     $.each(token, function(index, val) {
-    //         // console.log(index+" : "+val);
-    //     });
-    // } else {
-    //     $("#index-display").show();
-    //     $("#preloader").fadeOut();
-    // }
+    // $("#index-display").css('display','block');
+    // myApp.allowPanelOpen = false;
+    
+    if(token != undefined){
+        // console.log('Group Name'+token.group_name);
+        $("#menu_name").text(token.first_name);
+        if (token.group_name == "Technician") {
+            $(".menu_camps_display").hide();
+            $(".camp_book_form").hide();
+            $(".camp_approved").hide();
+            $(".leader_board_screen").hide();
+            $("#index-display").show();
+            $("#preloader").fadeOut();
+            mainView.router.load({
+                url: 'technician_view.html',
+                ignoreCache: false,
+            });
+        } else {
+            if (token.group_name == "FAM") {
+                $(".leader_board_screen").show();
+            } else {
+                $(".leader_board_screen").hide();
+            }
+            $(".menu_camps_display").show();
+            $(".camp_book_form").show();
+            $(".camp_approved").show();
+            $("#index-display").show();
+            $("#preloader").fadeOut();
+            mainView.router.load({
+                url: 'calendar.html',
+                ignoreCache: false,
+            });
+        }
+        $.each(token, function(index, val) {
+            // console.log(index+" : "+val);
+        });
+    } else {
+        $("#index-display").show();
+        $("#preloader").fadeOut();
+    }
 });
 
 myApp.onPageInit('machine_list', function(page) {
